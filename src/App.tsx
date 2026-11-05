@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-do
 import { motion } from 'framer-motion'
 import {
   ArrowUpRight, ArrowRight, Menu, X, MessageSquareText, RadioTower, PhoneCall,
-  Workflow, Megaphone, Code2, Check, Sparkles, Mail, MapPin,
+  Workflow, Megaphone, Code2, Check, Zap, Mail, MapPin, Phone,
   Instagram, Linkedin, Facebook
 } from 'lucide-react'
 
@@ -14,46 +14,76 @@ const A = ({to,children,className='',onClick}:{to:string,children:React.ReactNod
 const U = (id:string,w=600) => `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`
 
 const cardImages = {
-  /* service cards */
-  sms:         U('1611162617474-5b21e879e113'),   // phone/SMS
-  whatsapp:    U('1620712943543-bcc4688e7485'),   // WhatsApp chat
-  ivr:         U('1556761175-b413da4baf72'),      // call-centre team
-  crm:         U('1551288049-bebda4e38f71'),      // CRM analytics
-  marketing:   U('1460925895917-afdab827c52f'),   // digital marketing
-  webdev:      U('1498050108023-c5249f4df085'),   // laptop / coding
-  /* detail-page cards */
-  promo:       U('1521791136064-7986c2920216'),
-  transaction: U('1600880292203-757bb62b4baf'),
-  voice:       U('1581291518857-4e27b48ff24e'),
-  automated:   U('1542744173-8e7e53415bb0'),
-  virtual:     U('1531403009284-440f080d1e12'),
-  routing:     U('1553413077-190dd305871c'),
-  /* CRM detail */
-  crmLeads:    U('1560472354-b33ff0c44a43'),
-  crmSales:    U('1454165804606-c3d57bc86b40'),
-  crmAuto:     U('1542744094-3a31f272c490'),
-  crmReport:   U('1551434678-e076c223a692'),
-  /* Digital Marketing detail */
-  seo:         U('1611532736597-de2d4265fba3'),
-  social:      U('1432888498266-38ffec3eaf0a'),
-  ads:         U('1573164713988-8665fc963095'),
-  lead:        U('1607799279861-4dd421887fb3'),
-  /* Web & App dev detail */
+  /* ── service cards ─────────────────────────────────────────────────────── */
+  // Person holding phone with chat bubbles on screen → SMS/RCS
+  sms:         U('1601972599720-36938d4ecd31'),
+  // WhatsApp green chat on phone screen
+  whatsapp:    U('1512314889357-e157c22f938d'),
+  // Call-centre agent with headset at desk → IVR
+  ivr:         U('1559526324-593bc073d938'),
+  // CRM dashboard / analytics screen on laptop
+  crm:         U('1607252650355-f7fd0460ccdb'),
+  // Digital marketing / SEO analytics on screen
+  marketing:   U('1460925895917-afdab827c52f'),
+  // Developer typing on laptop — web dev
+  webdev:      U('1526045612212-70caf35c14df'),
+
+  /* ── SMS/RCS detail cards ──────────────────────────────────────────────── */
+  // Person reading SMS on phone
+  promo:       U('1488229297570-58520851e868'),
+  // OTP / notification alert on phone
+  transaction: U('1522542550221-31fd19575a2d'),
+  // Voice waveform / speaker → voice messaging
+  voice:       U('1516321318423-f06f85e504b3'),
+  // Automated workflow / flowchart on screen
+  automated:   U('1526628953301-3cd40e5a3d30'),
+  // Virtual phone / VOIP desk phone
+  virtual:     U('1576595580361-b8ad6b282200'),
+  // Call routing / switch board operator
+  routing:     U('1519389950473-47ba0277781c'),
+
+  /* ── CRM detail cards ─────────────────────────────────────────────────── */
+  // Leads list / contacts on screen
+  crmLeads:    U('1607252650355-f7fd0460ccdb'),
+  // Sales meeting / pipeline board
+  crmSales:    U('1629904853716-f0bc54eea481'),
+  // Marketing automation — email + phone icons
+  crmAuto:     U('1613294326794-e7c74fe886e2'),
+  // Reports chart / analytics dashboard
+  crmReport:   U('1551288049-bebda4e38f71'),
+
+  /* ── Digital Marketing detail cards ──────────────────────────────────── */
+  // Search engine / SEO keywords on screen
+  seo:         U('1559526324-593bc073d938'),
+  // Social media feed on phone
+  social:      U('1526628953301-3cd40e5a3d30'),
+  // PPC / Google Ads campaign dashboard
+  ads:         U('1573167507387-6b4b98cb7c13'),
+  // Lead funnel / form on laptop
+  lead:        U('1555421689-d68471e189f2'),
+
+  /* ── Web & App dev detail cards ──────────────────────────────────────── */
+  // Website design wireframes on screen
   website:     U('1517292987719-0369a794ec0f'),
-  ecomImg:     U('1556742049-0cfed4f6a45d'),
-  mobileApp:   U('1607082348824-0a96f2a4b9da'),
-  customDev:   U('1486312338219-ce68d2c6f44d'),
-  /* page-hero art */
-  aboutHero:   U('1607799279861-4dd421887fb3'),
-  /* Our Works tiles — all RSBIZ service categories */
-  workSms:     U('1611162617474-5b21e879e113'),
-  workWa:      U('1620712943543-bcc4688e7485'),
-  workIvr:     U('1553413077-190dd305871c'),
-  workCrm:     U('1551288049-bebda4e38f71'),
-  workMktg:    U('1460925895917-afdab827c52f'),
-  workWeb:     U('1498050108023-c5249f4df085'),
-  workMobile:  U('1607082348824-0a96f2a4b9da'),
-  workEcom:    U('1556742049-0cfed4f6a45d'),
+  // Ecommerce / online store checkout page
+  ecomImg:     U('1556742502-ec7c0e9f34b1'),
+  // Developer building a mobile app on laptop + phone side by side
+  mobileApp:   U('1522542550221-31fd19575a2d'),
+  // Custom software / code on screen
+  customDev:   U('1526045612212-70caf35c14df'),
+
+  /* ── Page-hero art ───────────────────────────────────────────────────── */
+  aboutHero:   U('1519389950473-47ba0277781c'),
+
+  /* ── Our Works tiles ─────────────────────────────────────────────────── */
+  workSms:     U('1601972599720-36938d4ecd31'),   // SMS on phone
+  workWa:      U('1512314889357-e157c22f938d'),   // WhatsApp chat
+  workIvr:     U('1519389950473-47ba0277781c'),   // call centre
+  workCrm:     U('1607252650355-f7fd0460ccdb'),   // CRM dashboard
+  workMktg:    U('1460925895917-afdab827c52f'),   // marketing analytics
+  workWeb:     U('1526045612212-70caf35c14df'),   // web coding
+  workMobile:  U('1615485500704-8e990f9900f7'),   // mobile app UI on phone
+  workEcom:    U('1556742502-ec7c0e9f34b1'),      // ecommerce store
 }
 
 const services = [
@@ -151,7 +181,8 @@ function Footer(){
         <div>
           <b>Contact</b>
           <span>info@rsbiz.in</span>
-          <span>8368115345</span>
+          <span>+91 9999114347</span>
+          <span>+91 8368115345</span>
           <span>111, Mahinder Chambers, Waman Tukaram Patil Marg, opposite Duke's Factory, Ghatla, Chembur, Mumbai – 400071</span>
         </div>
       </div>
@@ -176,7 +207,7 @@ function PageHero({kicker,title,lead,img:heroImg}:{kicker:string,title:React.Rea
         <div className="inner-hero-art">
           {heroImg
             ? <><div className="hero-art-ring"/><div className="hero-art-photo"><img src={heroImg} alt=""/></div></>
-            : <><div className="art-ring"/><div className="art-disc"><Sparkles size={40}/></div><span>RSBIZ<br/>COMMUNICATIONS<br/>DIGITAL<br/>TECHNOLOGY</span></>
+            : <><div className="art-ring"/><div className="art-disc"><Zap size={40}/></div><span>RSBIZ<br/>COMMUNICATIONS<br/>DIGITAL<br/>TECHNOLOGY</span></>
           }
         </div>
       </div>
@@ -246,6 +277,10 @@ function ContactBand(){
             <span><Mail size={17}/></span>
             <div><b>Email</b><small>info@rsbiz.in</small></div>
           </div>
+          <div className="contact-detail">
+            <span><Phone size={17}/></span>
+            <div><b>Phone</b><small>+91 9999114347 &nbsp;|&nbsp; +91 8368115345</small></div>
+          </div>
         </div>
         <EnquiryForm/>
       </div>
@@ -299,7 +334,7 @@ function Home(){
       </div>
       <div className="hero-visual">
         <div className="hero-photo"><img src={images.hero} alt="Business communication"/></div>
-        <div className="hero-sticker"><Sparkles size={17}/><span>Ideas into<br/>impact</span></div>
+        <div className="hero-sticker"><Zap size={17}/><span>Ideas into<br/>impact</span></div>
         <div className="orbit orbit-one"/><div className="orbit orbit-two"/>
         <div className="floating-card message-card">
           <span className="mini-icon"><MessageSquareText size={16}/></span>
@@ -673,7 +708,7 @@ function Contact(){
               <div><b>Branch Office — Mumbai</b><p>111, Mahinder Chambers, Waman Tukaram Patil Marg, opposite Duke's Factory, Ghatla, Chembur, Mumbai – 400071</p></div>
             </div>
           </div>
-          <p className="office-contact"><b>Phone:</b> 8368115345 &nbsp;|&nbsp; <b>Email:</b> info@rsbiz.in</p>
+          <p className="office-contact"><b>Phone:</b> +91 9999114347 &nbsp;|&nbsp; +91 8368115345 &nbsp;|&nbsp; <b>Email:</b> info@rsbiz.in</p>
         </div>
         <div className="map-panel">
           <iframe src="https://www.google.com/maps?q=111+Mahinder+Chambers+Chembur+Mumbai+400071&output=embed"
