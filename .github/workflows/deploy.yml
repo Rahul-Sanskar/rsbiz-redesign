@@ -1,32 +1,68 @@
-name: Deploy RSBIZ Website to GoDaddy
+
+name: RSBIZ Production Deployment
 
 on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: rsbiz-production
+  cancel-in-progress: false
+
 jobs:
-  deploy:
-    name: Upload Website to GoDaddy
+  build-and-deploy:
+    name: Build and Deploy to GoDaddy
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
+      # 1. Get the latest source code
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy Website via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+      # 2. Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # 3. Install exact dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Generate production build
+      - name: Build React Website
+        run: npm run build
+
+      # 5. Verify production output
+      - name: Verify Build
+        run: |
+          test -f dist/index.html
+          test -f dist/api/contact.php
+          echo "Production build verified successfully."
+
+      # 6. Deploy production files to GoDaddy
+      - name: Deploy to GoDaddy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+
           protocol: ftps
           port: 21
-          local-dir: ./
+
+          local-dir: ./dist/
           server-dir: ./
+
           exclude: |
             **/.git*
             **/.git*/**
-            **/.github/**
-            **/node_modules/**
+            **/.DS_Store
