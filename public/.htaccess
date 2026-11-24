@@ -1,0 +1,26 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# RSBIZ — Apache rewrite rules for Hostinger shared hosting
+#
+# Purpose: Allow React Router (client-side) to handle all URL paths.
+#          Without this, any direct visit to a non-root URL (e.g. /terms,
+#          /services, /contact) causes Apache to return 404 because no
+#          physical file with that name exists in the document root.
+#
+# How it works:
+#   1. If the request is for a real file (CSS, JS, images, .php) → serve it.
+#   2. If the request is for a real directory → serve it.
+#   3. Everything else → rewrite to index.html, which boots React Router.
+#      React Router reads window.location and renders the correct component.
+# ─────────────────────────────────────────────────────────────────────────────
+
+Options -MultiViews
+RewriteEngine On
+
+# If the requested resource is an actual file, serve it directly.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+# If the requested resource is an actual directory, serve it directly.
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# For everything else, fall through to index.html so React Router takes over.
+RewriteRule ^ /index.html [L]
